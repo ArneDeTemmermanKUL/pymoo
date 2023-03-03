@@ -242,8 +242,9 @@ class Algorithm:
 
         # add the infill solutions to an archive
         if self.archive is not None and infills is not None:
-            self.archive = self.archive.add(infills)
-
+            self.archive = Population.create(Population.merge(self.archive,infills))
+            self.archive =self.archive.view(Population).squeeze()
+            
         return ret
 
     def result(self):
