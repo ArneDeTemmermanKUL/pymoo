@@ -10,7 +10,7 @@ class ZDT(Problem):
 
     def __init__(self, n_var=30, **kwargs):
         super().__init__(n_var=n_var, n_obj=2, xl=0, xu=1, vtype=float, **kwargs)
-
+        self.number_of_eval =0
 
 class ZDT1(ZDT):
 
@@ -19,6 +19,8 @@ class ZDT1(ZDT):
         return np.array([x, 1 - np.sqrt(x)]).T
 
     def _evaluate(self, x, out, *args, **kwargs):
+        self.number_of_eval += x.shape[0]
+        print(f"DF1 number of eval {self.number_of_eval}")
         f1 = x[:, 0]
         g = 1 + 9.0 / (self.n_var - 1) * anp.sum(x[:, 1:], axis=1)
         f2 = g * (1 - anp.power((f1 / g), 0.5))

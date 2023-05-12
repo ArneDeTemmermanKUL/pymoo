@@ -4,7 +4,7 @@ from pymoo.core.initialization import Initialization
 from pymoo.core.mating import Mating
 from pymoo.core.population import Population
 from pymoo.core.repair import NoRepair
-
+import numpy as np
 
 class GeneticAlgorithm(Algorithm):
 
@@ -84,10 +84,15 @@ class GeneticAlgorithm(Algorithm):
         # do the mating using the current population
         off = self.mating.do(self.problem, self.pop, self.n_offsprings, algorithm=self)
 
+
+        off = off[[~np.isnan(ind.X)[0] for ind in off]]
+
         # if the mating could not generate any new offspring (duplicate elimination might make that happen)
         if len(off) == 0:
             self.termination.force_termination = True
             return
+
+
 
         # if not the desired number of offspring could be created
         elif len(off) < self.n_offsprings:

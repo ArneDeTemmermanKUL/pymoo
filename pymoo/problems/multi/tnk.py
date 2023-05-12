@@ -10,8 +10,13 @@ class TNK(Problem):
         super().__init__(n_var=2, n_obj=2, n_ieq_constr=2, vtype=float)
         self.xl = np.array([0, 1e-30])
         self.xu = np.array([np.pi, np.pi])
+        self.number_of_eval =0
 
     def _evaluate(self, x, out, *args, **kwargs):
+
+
+        self.number_of_eval += x.shape[0]
+        print(f"TNK number of eval {self.number_of_eval}")
         f1 = x[:, 0]
         f2 = x[:, 1]
         g1 = -(anp.square(x[:, 0]) + anp.square(x[:, 1]) - 1.0 - 0.1 * anp.cos(16.0 * anp.arctan(x[:, 0] / x[:, 1])))

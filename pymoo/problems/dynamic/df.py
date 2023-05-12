@@ -15,6 +15,7 @@ class DF(DynamicTestProblem):
                          xl=0,
                          xu=1,
                          **kwargs)
+        self.number_of_eval =0
 
     def _calc_pareto_front(self, *args, **kwargs):
         return Remote.get_instance().load("pymoo", "pf", "DF", f"{str(self.__class__.__name__)}.pf")
@@ -23,6 +24,9 @@ class DF(DynamicTestProblem):
 class DF1(DF):
 
     def _evaluate(self, x, out, *args, **kwargs):
+        self.number_of_eval += x.shape[0]
+        print(f"DF1 number of eval {self.number_of_eval}")
+        
         v = np.sin(0.5 * np.pi * self.time)
 
         G = np.abs(v)

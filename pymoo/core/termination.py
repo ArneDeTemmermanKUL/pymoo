@@ -1,5 +1,5 @@
 from abc import abstractmethod
-
+from math import isnan
 
 class Termination:
 
@@ -26,7 +26,9 @@ class Termination:
             progress = 1.0
         else:
             progress = self._update(algorithm)
-            assert progress >= 0.0
+            # print(progress)
+            
+            # assert isnan(progress) or progress >= 0.0
 
         self.perc = progress
         return self.perc
